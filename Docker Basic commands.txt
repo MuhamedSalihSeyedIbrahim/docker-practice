@@ -1,0 +1,464 @@
+Docker Basic commands
+
+RUN:
+
+docker run --> run images by creating containers
+docker run <image_name> --> run container
+docker run –it Ubuntu bash --> run container with interactive mode with console
+            it (flag) - Used to initiate interactive console
+docker run -p <internal_port>:<external_port>  <image_name> --> run with certain port mapping 
+            p (flag) - Used to give port mapping
+
+Note:
+CTRL+P+Q - to exit out of the container. It ensures that the container still exists even after we exit from the container.
+
+
+PULL:
+
+docker pull <image_name> --> it get the image from docker hub and avail to run on local machine
+
+
+IMAGES:
+
+docker images --> display docker images
+                 (below is output screen table parameters)
+                  TAG − This is used to logically tag images.
+                  Image ID − This is used to uniquely identify the image.
+                  Created − The number of days since the image was created.
+                  Virtual Size − The size of the image.
+docker images -q --> display on ImageID of images
+               q (flag) − It tells the Docker command to return the Image ID’s only.
+
+
+RMI:
+
+docker rmi --> remove docker images
+docker rmi <ImageID> --> remove docker using docker Image ID
+
+
+INSPECT:
+
+docker inspect <container_name> --> produce detail information on the image
+                container_name - This is the name of the Image.
+
+PS:
+
+docker ps --> show the currently running containers.
+docker ps -a -->The output will show all containers.
+           a (flag) - t tells the docker ps command to list all of the containers on the system.
+
+
+HISTORY:
+
+docker history <ImageID> -->The output will show all the commands run against that image.
+                ImageID − This is the Image ID for which you want to see all the commands that were run against it.
+
+
+TOP:
+
+docker top <ContainerID> -->The output will show the top-level processes within a container.
+            ContainerID − This is the Container ID for which you want to see the top processes.
+
+
+STOP:
+
+docker stop <ContainerID> -->The output will give the ID of the stopped container.
+            ContainerID − This is the Container ID which needs to be stopped.
+
+
+RM:
+
+docker rm <ContainerID> -->The output will give the ID of the removed container.
+           ContainerID − This is the Container ID which needs to be removed.
+
+
+STATS:
+
+docker stats <ContainerID> --> The output will show the CPU and Memory utilization of the Container.
+              ContainerID − This is the Container ID for which the stats need to be provided.
+            
+
+ATTACH:
+
+docker attach <ContainerID> --> NONE ,
+               ContainerID − This is the Container ID to which you need to attach.
+
+
+PAUSE:
+
+docker pause <ContainerID> --> The ContainerID of the paused container.
+              ContainerID − This is the Container ID to which you need to pause the processes in the container.
+
+
+
+UNPAUSE:
+
+docker unpause <ContainerID> --> The ContainerID of the unpause container.
+                ContainerID − This is the Container ID to which you need to unpause the processes in the container.
+
+
+
+KILL:
+
+docker kill <ContainerID> --> The ContainerID of the kill container.
+              ContainerID − This is the Container ID to which you need to kill the processes in the container.
+
+
+SERVICE:
+
+service docker stop --> A message showing that the Docker process has stopped.
+
+service docker start --> A message showing that the Docker process has started.
+
+
+
+
+
+Docker – Container Lifecycle
+The following illustration explains the entire lifecycle of a Docker container.
+
+Container Lifecycle
+--> Initially, the Docker container will be in the created state.
+--> Then the Docker container goes into the running state when the Docker run command is used.
+--> The Docker kill command is used to kill an existing Docker container.
+--> The Docker pause command is used to pause an existing Docker container.
+--> The Docker stop command is used to pause an existing Docker container.
+--> The Docker run command is used to put a container back from a stopped state to a running state.
+
+
+
+NSENTER:
+
+This method allows one to attach to a container without exiting the container.
+
+Syntax
+nsenter –m –u –n –p –i –t containerID command
+
+Options
+-u is used to mention the Uts namespace
+
+-m is used to mention the mount namespace
+
+-n is used to mention the network namespace
+
+-p is used to mention the process namespace
+
+-i s to make the container run in interactive mode.
+
+-t is used to connect the I/O streams of the container to the host OS.
+
+containerID − This is the ID of the container.
+
+Command − This is the command to run within the container.
+
+Return Value
+None
+
+
+
+DOCKER FILE:
+
+The following steps explain how you should go about creating a Docker File.
+Step 1 − Create a file called Docker File and edit it using vim. Please note that the name of the file has to be "Dockerfile" with "D" as capital.
+Edit Vim
+
+Step 2 − Build your Docker File using the following instructions.
+
+#This is a sample Image 
+FROM ubuntu 
+MAINTAINER demousr@gmail.com 
+
+RUN apt-get update 
+RUN apt-get install –y nginx 
+CMD [“echo”,”Image created”] 
+The following points need to be noted about the above file −
+
+The first line "#This is a sample Image" is a comment. You can add comments to the Docker File with the help of the # command
+The next line has to start with the FROM keyword. It tells docker, from which base image you want to base your image from. In our example, we are creating an image from the ubuntu image.
+The next command is the person who is going to maintain this image. Here you specify the MAINTAINER keyword and just mention the email ID.
+The RUN command is used to run instructions against the image. In our case, we first update our Ubuntu system and then install the nginx server on our ubuntu image.
+The last command is used to display a message to the user.
+
+Step 3 − Save the file. In the next chapter, we will discuss how to build the image.
+
+Build the Image
+
+docker build 
+
+
+
+BUILD:
+
+docker build
+This method allows the users to build their own Docker images.
+
+Syntax
+docker build  -t ImageName:TagName dir
+Options
+-t − is to mention a tag to the image
+
+ImageName − This is the name you want to give to your image.
+
+TagName − This is the tag you want to give to your image.
+
+Dir − The directory where the Docker File is present.
+
+Return Value
+None
+
+
+
+
+DOCKER TAG:
+
+This method allows one to tag an image to the relevant repository.
+
+Syntax
+docker tag imageID Repositoryname 
+Options
+imageID − This is the ImageID which needs to be tagged to the repository.
+
+Repositoryname − This is the repository name to which the ImageID needs to be tagged to.
+
+Return Value
+None
+
+
+DOCKER PUSH:
+
+This method allows one to push images to the Docker Hub.
+
+Syntax
+docker push Repositoryname 
+Options
+Repositoryname − This is the repository name which needs to be pushed to the Docker Hub.
+
+Return Value
+The long ID of the repository pushed to Docker Hub.
+
+
+DOCKER PULL:
+
+This method allows one to pull images from the Docker Hub.
+
+Syntax
+docker pull Repositoryname 
+Options
+Repositoryname − This is the repository name which needs to be pushed to the Docker Hub.
+
+Return Value
+the repository download console from Docker Hub.
+
+
+INFO:
+
+docker info 
+Options
+None
+
+Return Value
+The command will provide all relative information on the Docker component installed on the Docker Host.
+
+
+
+
+
+STORAGE DRIVERS:
+
+Docker has multiple storage drivers that allow one to work with the underlying storage devices. The following table shows the different storage drivers along with the technology used for the storage drivers.
+
+Technology	Storage Driver
+OverlayFS	overlay or overlay2
+AUFS	aufs
+Btrfs	brtfs
+Device Manager	devicemanager
+VFS	vfs
+ZFS	zfs
+Let us now discuss some of the instances in which you would use the various storage drivers −
+
+AUFS
+This is a stable driver; can be used for production-ready applications.
+
+It has good memory usage and is good for ensuring a smooth Docker experience for containers.
+
+There is a high-write activity associated with this driver which should be considered.
+
+It’s good for systems which are of Platform as a service type work.
+
+Devicemapper
+This is a stable driver; ensures a smooth Docker experience.
+
+This driver is good for testing applications in the lab.
+
+This driver is in line with the main Linux kernel functionality.
+
+Btrfs
+This driver is in line with the main Linux kernel functionality.
+
+There is a high-write activity associated with this driver which should be considered.
+
+This driver is good for instances where you maintain multiple build pools.
+
+Ovelay
+This is a stable driver and it is in line with the main Linux kernel functionality.
+
+It has a good memory usage.
+
+This driver is good for testing applications in the lab.
+
+ZFS
+This is a stable driver and it is good for testing applications in the lab.
+
+It’s good for systems which are of Platform-as-a-Service type work.
+
+To see the storage driver being used, issue the docker info command.
+
+EG:
+sudo docker run –d --volume-driver=flocker 
+   –v /home/demo:/var/jenkins_home –p 8080:8080 –p 50000:50000 jenkins
+
+
+
+
+Creating a Volume
+A volume can be created beforehand using the docker command. Let’s learn more about this command.
+
+Syntax
+docker volume create –-name=volumename –-opt options
+Options
+name − This is the name of the volume which needs to be created.
+
+opt − These are options you can provide while creating the volume.
+
+Return Value
+The command will output the name of the volume created.
+
+Example
+sudo docker volume create –-name = demo –opt o = size = 100m 
+n the above command, we are creating a volume of size 100MB and with a name of demo.
+
+
+
+
+Listing all the Volumes
+You can also list all the docker volumes on a docker host. More details on this command is given below −
+
+Syntax
+docker volume ls 
+Options
+None
+
+Return Value
+The command will output all the volumes on the docker host.
+
+Example
+sudo docker volume ls
+
+
+
+
+
+
+DOCKER NETWORKS:
+
+Listing All Docker Networks
+This command can be used to list all the networks associated with Docker on the host.
+
+Syntax
+docker network ls 
+Options
+None
+
+Return Value
+The command will output all the networks on the Docker Host.
+
+Example
+sudo docker network ls
+Output
+The output of the above command is shown below
+
+Docker Networks
+Inspecting a Docker network
+If you want to see more details on the network associated with Docker, you can use the Docker network inspect command.
+
+Syntax
+docker network inspect networkname 
+Options
+networkname − This is the name of the network you need to inspect.
+
+Return Value
+The command will output all the details about the network.
+
+Example
+sudo docker network inspect bridge 
+Output
+The output of the above command is shown below −
+
+Inspecting Docker Network
+Now let’s run a container and see what happens when we inspect the network again. Let’s spin up an Ubuntu container with the following command −
+
+sudo docker run –it ubuntu:latest /bin/bash 
+Run a Container in Network
+Now if we inspect our network name via the following command, you will now see that the container is attached to the bridge.
+
+sudo docker network inspect bridge
+Container Attached to Bridge
+Creating Your Own New Network
+One can create a network in Docker before launching containers. This can be done with the following command −
+
+Syntax
+docker network create –-driver drivername name 
+Options
+drivername − This is the name used for the network driver.
+
+name − This is the name given to the network.
+
+Return Value
+The command will output the long ID for the new network.
+
+Example
+sudo docker network create –-driver bridge new_nw 
+Output
+The output of the above command is shown below −
+
+Long ID
+You can now attach the new network when launching the container. So let’s spin up an Ubuntu container with the following command −
+
+sudo docker run –it –network=new_nw ubuntu:latest /bin/bash
+New Network
+And now when you inspect the network via the following command, you will see the container attached to the network.
+
+sudo docker network inspect new_nw 
+
+
+
+
+
+
+
+
+
+
+
+
+GENERAL EXAMPLE:
+
+sudo docker run –it –rm –name = HelloWorld –v “$PWD”:/usr/src/app 
+   –w /usr/src/app node node HelloWorld.js
+The following points need to be noted about the above command −
+
+The –rm option is used to remove the container after it is run.
+
+We are giving a name to the container called “HelloWorld”.
+
+We are mentioning to map the volume in the container which is /usr/src/app to our current present working directory. This is done so that the node container will pick up our HelloWorld.js script which is present in our working directory on the Docker Host.
+
+The –w option is used to specify the working directory used by Node.js.
+
+The first node option is used to specify to run the node image.
+
+The second node option is used to mention to run the node command in the node container.
+
+And finally we mention the name of our script.
+
+We will then get the following output. And from the output, we can clearly see that the Node container ran as a container and executed the HelloWorld.js script.
